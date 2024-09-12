@@ -5,23 +5,23 @@ namespace com.github.zehsteam.KidnapperFoxSettings.Patches;
 [HarmonyPatch(typeof(RoundManager))]
 internal class RoundManagerPatch
 {
-    [HarmonyPatch("Start")]
+    [HarmonyPatch(nameof(RoundManager.Start))]
     [HarmonyPostfix]
-    static void StartPatch()
+    private static void StartPatch()
     {
         SetBushWolfMaxSpawnCount();
     }
 
     private static void SetBushWolfMaxSpawnCount()
     {
-        EnemyType bushWolfEnemyType = RoundManager.Instance.WeedEnemies.Find(_ => _.enemyType.enemyName == "Bush Wolf").enemyType;
+        EnemyType enemyType = Utils.GetEnemyTypeFromResources("Bush Wolf");
 
-        if (bushWolfEnemyType == null)
+        if (enemyType == null)
         {
-            Plugin.logger.LogError("Error: Failed to set Kidnapper Fox max spawn count. Could not find BushWolf EnemyType in RoundManager WeedEnemies.");
+            Plugin.logger.LogError("Failed to set Kidnapper Fox max spawn count. Could not find EnemyType.");
             return;
         }
 
-        bushWolfEnemyType.MaxCount = Plugin.ConfigManager.MaxSpawnCount.Value;
+        enemyType.MaxCount = Plugin.ConfigManager.MaxSpawnCount.Value;
     }
 }

@@ -7,16 +7,16 @@ namespace com.github.zehsteam.KidnapperFoxSettings.Patches;
 [HarmonyPatch(typeof(BushWolfEnemy))]
 internal class BushWolfEnemyPatch
 {
-    [HarmonyPatch("Start")]
+    [HarmonyPatch(nameof(BushWolfEnemy.Start))]
     [HarmonyPostfix]
-    static void StartPatch(ref BushWolfEnemy __instance)
+    private static void StartPatch(ref BushWolfEnemy __instance)
     {
         __instance.enemyHP = Plugin.ConfigManager.Health.Value;
     }
 
-    [HarmonyPatch("OnCollideWithPlayer")]
+    [HarmonyPatch(nameof(BushWolfEnemy.OnCollideWithPlayer))]
     [HarmonyPrefix]
-    static bool OnCollideWithPlayerPatch(ref BushWolfEnemy __instance, Collider other, ref bool ___foundSpawningPoint, ref bool ___inKillAnimation, ref Vector3 ___currentHidingSpot, ref float ___timeSinceTakingDamage, ref PlayerControllerB ___lastHitByPlayer, ref bool ___dragging, ref bool ___startedShootingTongue)
+    private static bool OnCollideWithPlayerPatch(ref BushWolfEnemy __instance, Collider other, ref bool ___foundSpawningPoint, ref bool ___inKillAnimation, ref Vector3 ___currentHidingSpot, ref float ___timeSinceTakingDamage, ref PlayerControllerB ___lastHitByPlayer, ref bool ___dragging, ref bool ___startedShootingTongue)
     {
         if (Plugin.ConfigManager.InstaKillPlayer.Value)
         {

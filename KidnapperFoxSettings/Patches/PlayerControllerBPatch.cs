@@ -6,9 +6,9 @@ namespace com.github.zehsteam.KidnapperFoxSettings.Patches;
 [HarmonyPatch(typeof(PlayerControllerB))]
 internal class PlayerControllerBPatch
 {
-    [HarmonyPatch("DropAllHeldItemsAndSync")]
+    [HarmonyPatch(nameof(PlayerControllerB.DropAllHeldItemsAndSync))]
     [HarmonyPrefix]
-    static bool DropAllHeldItemsAndSyncPatch()
+    private static bool DropAllHeldItemsAndSyncPatch()
     {
         if (BushWolfEnemyPatch.IsLocalPlayerBeingDragged())
         {
