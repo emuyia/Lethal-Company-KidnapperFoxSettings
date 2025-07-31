@@ -53,6 +53,24 @@ internal class BushWolfEnemyPatch
                 {
                     localPlayerScript.DamagePlayer(damage, hasDamageSFX: true, callRPC: true, causeOfDeath: CauseOfDeath.Mauling, deathAnimation: 8);
                     __instance.SetEnemyStunned(true, Plugin.ConfigManager.DamageInterval.Value, localPlayerScript);
+
+                    if (__instance.creatureVoice != null && __instance.creatureVoice.isPlaying)
+                    {
+                        __instance.creatureVoice.Stop();
+                    }
+                    if (__instance.growlAudio != null && __instance.growlAudio.isPlaying)
+                    {
+                        __instance.growlAudio.Stop();
+                    }
+                    if (__instance.tongueAudio != null && __instance.tongueAudio.isPlaying)
+                    {
+                        __instance.tongueAudio.Stop();
+                    }
+
+                    if (__instance.killSFX != null)
+                    {
+                        __instance.creatureSFX.PlayOneShot(__instance.killSFX);
+                    }
                 }
             }
         }
